@@ -1,4 +1,4 @@
-import time, os
+import time, os, sys
 
 def main():
     """Home screen, gets a chocice of 1,2,3,4 from the user and catches errors"""
@@ -42,18 +42,62 @@ def print_list(given_list):
     print("\n")
 
 
+def find_choice(given_list, choice, key):
+    """will fint the first key with the given varable e.g. will return "Salmon Nigiri" if "menu, 1, 'position'" given"""
+    for item, info in given_list.items():
+        if info.get(key) == choice:
+            return item
+
+
+def exit():
+    exit = input('Press enter to continue, "Finish" to finish or "exit" to stop order').lower()
+    if exit == "finish":
+        return "break"
+    elif exit == "exit":
+        os.system('cls')
+        print("Stopping order...")
+        time.sleep(1.5)
+        os.system('cls')
+        sys.exit
+
+
 def item_choice(given_list):
     """This function will get the users choices from the menu and store them, it will also add up the price"""
+    price = 0
+    order = []
     while True:
-        choice = input("Enter the item you would like to order (number or name):")
-        if choice in menu or choice in ["1","2"]:
-            print("pased")
+        os.system('cls')
+        print_list(menu)
+        choice = input("Enter the item you would like to order (number or name):").capitalize()
+
+        if choice in ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]:
+            choice = find_choice(menu, int(choice), "position")
+            price += menu[choice]["price"]
+            order.append(choice)
+            print(f"Added {choice} - ${menu[choice]['price']} to order.\nTotal: ${price}")
+            if exit() == "break":
+                break
+
+        elif choice in menu:
+            price += menu[choice]["price"]
+            order.append(choice)
+            print(f"Added {choice} - ${menu[choice]['price']} to order.\nTotal: ${price}")
+            if exit() == "break":
+                break
+
         else:
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+            print("Could not find item.\nCheck capitals and spelling.\nYou can also use numbers to find items.")
+            if exit() == "break":
+                break
+    
+    print(f"Order:\n{order}\n\nTotal:\n${price}")
+
 
 
 
 menu = {
+"Nothing" : {"price" : 0.00, "food_type" : "sushi", "position" : 0},
+
 "Salmon Nigiri" : {"price" : 3.50, "food_type" : "sushi", "position" : 1},
 
 "Tuna Sashimi" : {"price" : 4.50, "food_type" : "sushi", "position" : 2},
@@ -96,7 +140,6 @@ menu = {
 os.system('cls')
 
 
-print_list(menu)
 item_choice(menu)
 
 
