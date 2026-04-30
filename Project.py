@@ -140,13 +140,15 @@ def finalise_order(price, order):
         if option in ["1","one","pickup"]:
             #pick up
             os.system('cls')
-            print(f"Thank you for you order:\nOrder:\n{order}\n\nTotal:\n${price}")
+            name = input("Please enter your name for the order: ").capitalize()
+            print(f"Thank you for your order {name}\nFood:\n{order}\n\nTotal:\n${price}")
             input("Press enter to continue:")
             main()
         elif option in ["2","two","delivery"]:
             #delivery
             while True:
                 distance = get_int("Please enter how far away you are (km)")
+                name = input("Please enter your name for the order: ").capitalize()
 
                 if distance > DELIVERY_MAX:
                     #distance validation:
@@ -157,7 +159,7 @@ def finalise_order(price, order):
                     os.system('cls')
                     print(f"Delivery will cost: ${DELIVERY_PRICE_START + (DELIVERY_PRICE*distance)}")
                     price += DELIVERY_PRICE_START + (DELIVERY_PRICE*distance)
-                    print(f"Thank you for you order:\nOrder:\n{order}\n\nTotal:\n${price}")
+                    print(f"Thank you for your order {name}\nFood:\n{order}\n\nTotal:\n${price}\n\nDelivery time:\n{DELIVERY_Time_START + (DELIVERY_TIME*distance)}min")
                     input("Press enter to continue:")
                     main()
         else:
@@ -167,8 +169,6 @@ def finalise_order(price, order):
 
 
 menu = {
-"Nothing" : {"price" : 0.00, "food_type" : "sushi", "position" : 0},
-
 "Salmon Nigiri" : {"price" : 3.50, "food_type" : "sushi", "position" : 1},
 
 "Tuna Sashimi" : {"price" : 4.50, "food_type" : "sushi", "position" : 2},
@@ -188,8 +188,6 @@ menu = {
 "Salmon Teriyaki Bento" : {"price" : 15.50, "food_type" : "box", "position" : 9},
 
 "Vegetable Tempura Bento" : {"price" : 13.00, "food_type" : "box", "position" : 10},
-
-"Custom box" : {"price" : "--", "food_type" : "box", "position" : 11},
 
 "Chicken Yakisoba" : {"price" : 12.50, "food_type" : "noodles", "position" : 12},
 
@@ -214,8 +212,8 @@ DELIVERY_Time_START = 5
 #max delivery distance
 DELIVERY_MAX = 150
 #delivery price per km
-DELIVERY_PRICE = 1.5
-DELIVERY_PRICE_START = 5
+DELIVERY_PRICE = 0.5
+DELIVERY_PRICE_START = 2
 
 
 os.system('cls')
