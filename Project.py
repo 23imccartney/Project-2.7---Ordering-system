@@ -1,32 +1,38 @@
+"""Sushi delivery.
+
+My project will be an ordering system for a sushi shop. It will include a simple order item/drink, sushi rolls / riceballs.
+You will also be able to have a delivery system, a cancel option and a total price at the end.
+"""
+
 import time, os, sys
 
+
 def main():
-    """Home screen, gets a chocice of 1,2,3,4 from the user and catches errors"""
+    """Home screen, gets a chocice of 1,2,3,4 from the user and catches errors."""
     while True:
         os.system('cls')
         print(f"{'----- Koji Kitchen -----':^13}\n{'1 Order    -    2 Menu':^13}\n{'3 About    -    4 Exit':^13}")
         choice = input("Enter an option: ").lower()
         if choice in ["1", "2", "3", "4", "one", "two", "three", "four", "order", "menu", "about", "exit"]:
-            if choice in ["order","1", "one"]:
-                #order function
+            if choice in ["order", "1", "one"]:
+                # order function
                 finalise_order(*item_choice(menu))
                 input("Press enter to continue:")
-            elif choice in ["menu","2", "two"]:
-                #menu
+            elif choice in ["menu", "2", "two"]:
+                # menu
                 print_list(menu)
                 input("Press enter to continue:")
-            elif choice in ["menu","2", "two"]:
-                #about
+            elif choice in ["menu", "2", "two"]:
+                # about
                 print("""Our Story
 We opened Koji Kitchen back in 2018 with a pretty simple goal: to make really good Japanese food part of the local routine. People told us we were a bit brave opening a spot that focused on traditional Tonkotsu Ramen and hand-cut Sashimi in this neighborhood, but we figured that if we got the basics right, people would come.
 Today, we’re mostly known for our signature Bento boxes and the "crazy" amount of effort we put into our Teriyaki Chicken. We still do things the long way—simmering our broths for hours and making sure every Dragon Roll is rolled to order. It’s fresh, it’s consistent, and it’s exactly the kind of food we love to eat ourselves.
 Whether you're grabbing a quick Spicy Tuna Roll on your lunch break or sitting down for a big bowl of Yakisoba with the family, we’re just happy to be your local go-to.""")
                 input("Press enter to continue:")
             else:
-                #exit
+                # exit
                 os.system('cls')
                 sys.exit("Thank you!")
-
 
         else:
             print("""Error, enter a number between 1 and 4\ne.g. 1\nnot "five", -1 or 0""")
@@ -35,27 +41,26 @@ Whether you're grabbing a quick Spicy Tuna Roll on your lunch break or sitting d
 
 
 def print_list(given_list):
-    """this function prints the given list and sorts it into sushi, boxes, noodles and drinks, it also prints the index"""
-    
-    # print sushi
+    """this function prints the given list and sorts it into sushi, boxes, noodles and drinks, it also prints the index."""
+    #  print sushi
     print("Sushi:\n")
     for item, info in given_list.items():
         if info["food_type"] == "sushi":
             print(f"{info['position']}. {item}: {info['price']}$")
 
-    # print bento boxes
+    #  print bento boxes
     print("\n\nBento boxes:\n")
     for item, info in given_list.items():
         if info["food_type"] == "box":
             print(f"{info['position']}. {item}: {info['price']}$")
 
-    # print noodles
+    #  print noodles
     print("\n\nNoodles:\n")
     for item, info in given_list.items():
         if info["food_type"] == "noodles":
             print(f"{info['position']}. {item}: {info['price']}$")
 
-    # print drinks
+    #  print drinks
     print("\n\nDrinks:\n")
     for item, info in given_list.items():
         if info["food_type"] == "drink":
@@ -64,13 +69,14 @@ def print_list(given_list):
 
 
 def find_choice(given_list, choice, key):
-    """will fint the first key with the given varable e.g. will return "Salmon Nigiri" if "menu, 1, 'position'" given"""
+    """will fint the first key with the given varable e.g. will return "Salmon Nigiri" if "menu, 1, 'position'" given."""
     for item, info in given_list.items():
         if info.get(key) == choice:
             return item
 
 
 def exit():
+    """ask user if they whant to cancel order or prceed to checkout."""
     exit = input('Press enter to continue, "finish" to continue to checkout\nor "cancel" to cancel order:\n').lower()
     if exit == "finish":
         return "break"
@@ -83,7 +89,7 @@ def exit():
 
 
 def item_choice(given_list):
-    """This function will get the users choices from the menu and store them, it will also add up the price"""
+    """This function will get the users choices from the menu and store them, it will also add up the price."""
     price = 0
     order = []
     while True:
@@ -91,7 +97,7 @@ def item_choice(given_list):
         print_list(menu)
         choice = input("Enter the item you would like to order (number or name):").capitalize()
 
-        if choice in ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19"]:
+        if choice in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"]:
             choice = find_choice(menu, int(choice), "position")
             price += menu[choice]["price"]
             order.append(choice)
@@ -99,7 +105,7 @@ def item_choice(given_list):
             if exit() == "break":
                 os.system('cls')
                 print(f"Order:\n{order}\n\nTotal:\n${price}")
-                return price,order
+                return  price, order
 
         elif choice in menu:
             price += menu[choice]["price"]
@@ -108,18 +114,18 @@ def item_choice(given_list):
             if exit() == "break":
                 os.system('cls')
                 print(f"Order:\n{order}\n\nTotal:\n${price}")
-                return price,order
+                return  price, order
 
         else:
             print("Could not find item.\nCheck capitals and spelling.\nYou can also use numbers to find items.")
             if exit() == "break":
                 os.system('cls')
                 print(f"Order:\n{order}\n\nTotal:\n${price}")
-                return price,order
-    
+                return  price, order
+
 
 def get_int(txt):
-    """Gets an integer and retuns it, will not except "five", 1.5 or -1 """
+    """Gets an integer and retuns it, will not except "five", 1.5 or -1."""
     while True:
         try:
             option = int(input(txt))
@@ -134,24 +140,24 @@ def get_int(txt):
 
 
 def finalise_order(price, order):
-    """will ask if person whants to pick up order or get it deliverd, will also calculate price"""
+    """will ask if person whants to pick up order or get it deliverd, will also calculate price."""
     while True:
         option = input(f"How would you like to get your food?:\n1. Pickup - no fee\n2. Delivery - {DELIVERY_PRICE_START} + ({DELIVERY_PRICE} perkm)\n").lower()
         if option in ["1","one","pickup"]:
-            #pick up
+            # pick up
             os.system('cls')
             name = input("Please enter your name for the order: ").capitalize()
             print(f"Thank you for your order {name}\nFood:\n{order}\n\nTotal:\n${price}")
             input("Press enter to continue:")
             main()
         elif option in ["2","two","delivery"]:
-            #delivery
+            # delivery
             while True:
                 distance = get_int("Please enter how far away you are (km)")
                 name = input("Please enter your name for the order: ").capitalize()
 
                 if distance > DELIVERY_MAX:
-                    #distance validation:
+                    # distance validation:
                     option = input("We do not deliver that far\nPress enter to continue or Exit to chose a difrent option:")
                     if option == "exit":
                         break
@@ -167,55 +173,54 @@ def finalise_order(price, order):
             continue
 
 
-
 menu = {
-"Salmon Nigiri" : {"price" : 3.50, "food_type" : "sushi", "position" : 1},
+    "Salmon Nigiri" : {"price" : 3.50, "food_type" : "sushi", "position" : 1},
 
-"Tuna Sashimi" : {"price" : 4.50, "food_type" : "sushi", "position" : 2},
+    "Tuna Sashimi" : {"price" : 4.50, "food_type" : "sushi", "position" : 2},
 
-"California Roll" : {"price" : 6.00, "food_type" : "sushi", "position" : 3},
+    "California Roll" : {"price" : 6.00, "food_type" : "sushi", "position" : 3},
 
-"Spicy Tuna Roll" : {"price" : 6.50, "food_type" : "sushi", "position" : 4},
+    "Spicy Tuna Roll" : {"price" : 6.50, "food_type" : "sushi", "position" : 4},
 
-"Dragon Roll" : {"price" : 12.00, "food_type" : "sushi", "position" : 5},
+    "Dragon Roll" : {"price" : 12.00, "food_type" : "sushi", "position" : 5},
 
-"Cucumber Maki" : {"price" : 3.00, "food_type" : "sushi", "position" : 6},
+    "Cucumber Maki" : {"price" : 3.00, "food_type" : "sushi", "position" : 6},
 
-"Teriyaki Chicken Bento" : {"price" : 14.50, "food_type" : "box", "position" : 7},
+    "Teriyaki Chicken Bento" : {"price" : 14.50, "food_type" : "box", "position" : 7},
 
-"Beef Yakiniku Bento" : {"price" : 16.00, "food_type" : "box", "position" : 8},
+    "Beef Yakiniku Bento" : {"price" : 16.00, "food_type" : "box", "position" : 8},
 
-"Salmon Teriyaki Bento" : {"price" : 15.50, "food_type" : "box", "position" : 9},
+    "Salmon Teriyaki Bento" : {"price" : 15.50, "food_type" : "box", "position" : 9},
 
-"Vegetable Tempura Bento" : {"price" : 13.00, "food_type" : "box", "position" : 10},
+    "Vegetable Tempura Bento" : {"price" : 13.00, "food_type" : "box", "position" : 10},
 
-"Chicken Yakisoba" : {"price" : 12.50, "food_type" : "noodles", "position" : 12},
+    "Chicken Yakisoba" : {"price" : 12.50, "food_type" : "noodles", "position" : 12},
 
-"Shrimp Tempura Udon" : {"price" : 13.50, "food_type" : "noodles", "position" : 13},
+    "Shrimp Tempura Udon" : {"price" : 13.50, "food_type" : "noodles", "position" : 13},
 
-"Tonkotsu Ramen" : {"price" : 14.00, "food_type" : "noodles", "position" : 14},
+    "Tonkotsu Ramen" : {"price" : 14.00, "food_type" : "noodles", "position" : 14},
 
-"Vegetable Yaki Udon" : {"price" : 11.50, "food_type" : "noodles", "position" : 15},
+    "Vegetable Yaki Udon" : {"price" : 11.50, "food_type" : "noodles", "position" : 15},
 
-"Miso soup" : {"price" : 2.50, "food_type" : "drink", "position" : 16},
+    "Miso soup" : {"price" : 2.50, "food_type" : "drink", "position" : 16},
 
-"Coca-cola" : {"price" : 3.00, "food_type" : "drink", "position" : 17},
+    "Coca-cola" : {"price" : 3.00, "food_type" : "drink", "position" : 17},
 
-"Sprite" : {"price" : 3.00, "food_type" : "drink", "position" : 18},
+    "Sprite" : {"price" : 3.00, "food_type" : "drink", "position" : 18},
 
-"Apple juice" : {"price" : 2.50, "food_type" : "drink", "position" : 19},
+    "Apple juice" : {"price" : 2.50, "food_type" : "drink", "position" : 19},
 }
 
-#delivery time per km in min
+# delivery time per km in min
 DELIVERY_TIME = 3
 DELIVERY_Time_START = 5
-#max delivery distance
+# max delivery distance
 DELIVERY_MAX = 150
-#delivery price per km
+# delivery price per km
 DELIVERY_PRICE = 0.5
 DELIVERY_PRICE_START = 2
 
-
+"""os.system('cls') and print() are to make code look clean when first run and once quit, main code inside"""
 os.system('cls')
 
 main()
