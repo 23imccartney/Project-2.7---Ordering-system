@@ -22,7 +22,7 @@ def main():
                 # menu
                 print_list(menu)
                 input("Press enter to continue:")
-            elif choice in ["menu", "2", "two"]:
+            elif choice in ["about", "3", "three"]:
                 # about
                 print("""Our Story
 We opened Koji Kitchen back in 2018 with a pretty simple goal: to make really good Japanese food part of the local routine. People told us we were a bit brave opening a spot that focused on traditional Tonkotsu Ramen and hand-cut Sashimi in this neighborhood, but we figured that if we got the basics right, people would come.
@@ -36,7 +36,7 @@ Whether you're grabbing a quick Spicy Tuna Roll on your lunch break or sitting d
 
         else:
             print("""Error, enter a number between 1 and 4\ne.g. 1\nnot "five", -1 or 0""")
-            time.sleep(1)
+            time.sleep(2.5)
             os.system('cls')
 
 
